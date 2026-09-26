@@ -1,4 +1,4 @@
-package com.github.cao.awa.kora.mysql.data.row
+package com.github.kusa233.kalmia.mysql.data.row
 
 data class Row(
     val values: List<String?>

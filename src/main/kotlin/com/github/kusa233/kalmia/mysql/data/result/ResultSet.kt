@@ -1,9 +1,9 @@
-package com.github.cao.awa.kora.mysql.data.result
+package com.github.kusa233.kalmia.mysql.data.result
 
-import com.github.cao.awa.kora.mysql.data.Column
-import com.github.cao.awa.kora.mysql.data.line.EmptyLine
-import com.github.cao.awa.kora.mysql.data.line.Line
-import com.github.cao.awa.kora.mysql.data.row.Row
+import com.github.kusa233.kalmia.mysql.data.Column
+import com.github.kusa233.kalmia.mysql.data.line.EmptyLine
+import com.github.kusa233.kalmia.mysql.data.line.Line
+import com.github.kusa233.kalmia.mysql.data.row.Row
 
 class ResultSet(val columns: List<Column>, val rows: Map<Column, Row>, val lines: Int) {
     companion object {
@@ -35,10 +35,10 @@ class ResultSet(val columns: List<Column>, val rows: Map<Column, Row>, val lines
 
     fun getValues(columnName: String): List<String?> {
         val column = this.nameMap[columnName]
-        if (column != null) {
-            return getValues(column)
+        return if (column != null) {
+            getValues(column)
         } else {
-            return Row.EMPTY_ROW.values
+            Row.EMPTY_ROW.values
         }
     }
 

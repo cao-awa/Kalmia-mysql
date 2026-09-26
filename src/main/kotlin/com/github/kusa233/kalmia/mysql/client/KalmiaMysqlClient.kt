@@ -1,18 +1,16 @@
-package com.github.cao.awa.kora.mysql.client
+package com.github.kusa233.kalmia.mysql.client
 
-import com.github.cao.awa.kora.mysql.client.handshake.HandshakeData
-import com.github.cao.awa.kora.mysql.config.KoraMysqlClientConfig
-import com.github.cao.awa.kora.mysql.data.Column
-import com.github.cao.awa.kora.mysql.data.result.ResultSet
-import com.github.cao.awa.kora.mysql.data.row.Row
-import com.github.cao.awa.kora.plugin.registerCleaner
-import com.github.cao.awa.kora.status.KoraStatus
+import com.github.kusa233.kalmia.mysql.client.handshake.HandshakeData
+import com.github.kusa233.kalmia.mysql.data.Column
+import com.github.kusa233.kalmia.mysql.data.result.ResultSet
+import com.github.kusa233.kalmia.mysql.data.row.Row
+import com.github.kusa233.kalmia.plugin.registerCleaner
+import com.github.kusa233.kalmia.status.KalmiaStatus
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.io.OutputStream
-import java.net.ConnectException
 import java.net.Socket
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -24,7 +22,7 @@ import java.util.Base64
 import java.util.Random
 import javax.crypto.Cipher
 
-class KoraMysqlClient(
+class KalmiaMysqlClient(
     private val host: String,
     private val port: Int,
     private val username: String,
@@ -32,9 +30,9 @@ class KoraMysqlClient(
     private val database: String = ""
 ) {
     companion object {
-        private val LOGGER: Logger = LogManager.getLogger("KoraMysqlClient")
-        private var REAL_INSTANCE: KoraMysqlClient? = null
-        val INSTANCE: KoraMysqlClient
+        private val LOGGER: Logger = LogManager.getLogger("KalmiaMysqlClient")
+        private var REAL_INSTANCE: KalmiaMysqlClient? = null
+        val INSTANCE: KalmiaMysqlClient
             get() = REAL_INSTANCE!!
         private const val CLIENT_LONG_PASSWORD = 0x00000001
         private const val CLIENT_LONG_FLAG = 0x00000004
@@ -46,8 +44,8 @@ class KoraMysqlClient(
         private const val CLIENT_DEPRECATE_EOF = 0x01000000
         private lateinit var daemonThread: Thread
 
-        fun init(config: KoraMysqlClientConfig) {
-            REAL_INSTANCE = KoraMysqlClient(
+        fun init(config: com.github.kusa233.kalmia.mysql.config.KalmiaMysqlClientConfig) {
+            REAL_INSTANCE = KalmiaMysqlClient(
                 config.host(),
                 config.port(),
                 config.username(),
@@ -58,23 +56,23 @@ class KoraMysqlClient(
             try {
                 INSTANCE.connect()
 
-                KoraStatus.registerLifecycle("Kora-mysql", INSTANCE)
+                KalmiaStatus.registerLifecycle("Kalmia-mysql", INSTANCE)
 
-                KoraStatus.registerReloadListener {
+                KalmiaStatus.registerReloadListener {
                     INSTANCE.close()
                     this.daemonThread.interrupt()
-                    KoraStatus.completedLifecycle(INSTANCE)
+                    KalmiaStatus.completedLifecycle(INSTANCE)
                 }
 
-                KoraStatus.registerStopListener {
+                KalmiaStatus.registerStopListener {
                     INSTANCE.close()
                     this.daemonThread.interrupt()
-                    KoraStatus.completedLifecycle(INSTANCE)
+                    KalmiaStatus.completedLifecycle(INSTANCE)
                 }
 
-                registerCleaner("kora-mysql-instance") {
+                registerCleaner("kalmia-mysql-instance") {
                     REAL_INSTANCE = null
-                    LOGGER.info("Kora MySql lifecycle ending")
+                    LOGGER.info("Kalmia MySql lifecycle ending")
                 }
 
                 val random = Random()
@@ -100,7 +98,7 @@ class KoraMysqlClient(
                             }
                         }
                     } catch (e: InterruptedException) {
-                        LOGGER.info("Kora MySql client daemon thread exited")
+                        LOGGER.info("Kalmia MySql client daemon thread exited")
                     }
                 }
 
@@ -141,7 +139,7 @@ class KoraMysqlClient(
         this.isRunning = false
     }
 
-    fun execute(sql: String): ResultSet {
+    fun execute(sql: String): com.github.kusa233.kalmia.mysql.data.result.ResultSet {
         synchronized(this) {
             this.sequenceId = 0
             val sqlBytes = sql.toByteArray(StandardCharsets.UTF_8)
@@ -152,7 +150,7 @@ class KoraMysqlClient(
             val firstPacket = readPacket()
             return when (firstPacket[0].toInt() and 0xFF) {
                 0x00 -> {
-                    ResultSet.EMPTY_RESULT
+                    _root_ide_package_.com.github.kusa233.kalmia.mysql.data.result.ResultSet.EMPTY_RESULT
                 }
 
                 0xFF -> throwMysqlError(firstPacket)
@@ -161,7 +159,7 @@ class KoraMysqlClient(
         }
     }
 
-    private fun parseColumnDefinition(packet: ByteArray): Column {
+    private fun parseColumnDefinition(packet: ByteArray): com.github.kusa233.kalmia.mysql.data.Column {
         var pos = 0
         repeat(4) {
             val len = readLengthEncode(packet, pos)

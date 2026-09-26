@@ -1,6 +1,6 @@
-package com.github.cao.awa.kora.mysql.data.line
+package com.github.kusa233.kalmia.mysql.data.line
 
-import com.github.cao.awa.kora.mysql.data.Column
+import com.github.kusa233.kalmia.mysql.data.Column
 
 open class Line(val creator: MutableMap<Column, String?>.() -> Unit) {
     private val data: MutableMap<Column, String?> = mutableMapOf<Column, String?>().also {

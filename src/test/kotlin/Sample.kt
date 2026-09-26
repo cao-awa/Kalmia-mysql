@@ -1,10 +1,10 @@
-import com.github.cao.awa.kora.mysql.client.KoraMysqlClient
-import com.github.cao.awa.kora.mysql.entrypoint.MysqlPluginBootstrap
+import com.github.kusa233.kalmia.mysql.client.KalmiaMysqlClient
+import com.github.kusa233.kalmia.mysql.entrypoint.MysqlPluginBootstrap
 
 object Test {
     @JvmStatic
     fun entry() {
-        val mysqlClient = KoraMysqlClient.INSTANCE
+        val mysqlClient = KalmiaMysqlClient.INSTANCE
         val result = mysqlClient.execute("SELECT User, Host FROM mysql.user;")
         for (column in result.columns) {
             println(": Column: ${column.name}-")

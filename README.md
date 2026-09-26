@@ -1,5 +1,5 @@
-# Kora-redis
-A MySQL client plugin for Kora webserver.
+# Kalmia-redis
+A MySQL client plugin for Kalmia webserver.
 
 ## Usage
 Add dependencies firsy:
@@ -11,20 +11,20 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.cao-awa:Kora-mysql:{version}'
+    implementation 'com.github.cao-awa:Kalmia-mysql:{version}'
 }
 ```
 
-For the versions, see [JitPack](https://jitpack.io/#cao-awa/Kora-mysql).
+For the versions, see [JitPack](https://jitpack.io/#cao-awa/Kalmia-mysql).
 
 And use redis client in your code:
 ```kotlin
-import com.github.cao.awa.kora.mysql.client.KoraMysqlClient
+import com.github.cao.awa.kalmia.mysql.client.KalmiaMysqlClient
 
 object Test {
     @JvmStatic
     fun entry() {
-        val mysqlClient = KoraMysqlClient.INSTANCE
+        val mysqlClient = KalmiaMysqlClient.INSTANCE
         val result = mysqlClient.execute("SELECT User, Host FROM mysql.user;")
         for (column in result.columns) {
             println(": Column: ${column.name}-")
@@ -45,14 +45,14 @@ object Test {
 }
 ```
 
-In produce environment, you need put the ``kora-mysql`` jar to ``libs/`` directory and declare entrypoint:
+In produce environment, you need put the ``kalmia-mysql`` jar to ``libs/`` directory and declare entrypoint:
 ```json
 {
     "entrypoint": [
-        "kora-mysql-client",
+        "kalmia-mysql-client",
         "com.yourservice.xxx.ServiceEntrypoint#entry"
     ]
 }
 ```
 
-For entrypoint, please see [Kora's document](https://github.com/cao-awa/Kora/tree/main/docs/entrypoint)/
+For entrypoint, please see [Kalmia's document](https://github.com/cao-awa/Kalmia/tree/main/docs/entrypoint)/

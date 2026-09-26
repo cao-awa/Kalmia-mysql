@@ -1,4 +1,4 @@
-package com.github.cao.awa.kora.mysql.client.handshake
+package com.github.kusa233.kalmia.mysql.client.handshake
 
 data class HandshakeData(val scramble: ByteArray, val authPluginName: String) {
     override fun equals(other: Any?): Boolean {

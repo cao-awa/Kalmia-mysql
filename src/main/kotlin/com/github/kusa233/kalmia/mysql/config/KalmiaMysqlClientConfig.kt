@@ -1,14 +1,14 @@
-package com.github.cao.awa.kora.mysql.config
+package com.github.kusa233.kalmia.mysql.config
 
 import com.github.cao.awa.cason.obj.JSONObject
-import com.github.cao.awa.kora.config.KoraConfig
+import com.github.kusa233.kalmia.config.KalmiaConfig
 import java.io.File
 
-open class KoraMysqlClientConfig : KoraConfig() {
+open class KalmiaMysqlClientConfig : KalmiaConfig() {
     companion object {
-        fun createConfig(file: File): KoraMysqlClientConfig {
+        fun createConfig(file: File): KalmiaMysqlClientConfig {
             return createConfig(file) {
-                val config = KoraMysqlClientConfig()
+                val config = KalmiaMysqlClientConfig()
 
                 ifString("host") {
                     config.host(this)
@@ -50,7 +50,7 @@ open class KoraMysqlClientConfig : KoraConfig() {
         return this.host
     }
 
-    open fun host(host: String): KoraMysqlClientConfig {
+    open fun host(host: String): KalmiaMysqlClientConfig {
         this.host = host
         return this
     }
@@ -59,7 +59,7 @@ open class KoraMysqlClientConfig : KoraConfig() {
         return this.port
     }
 
-    open fun port(port: Int): KoraMysqlClientConfig {
+    open fun port(port: Int): KalmiaMysqlClientConfig {
         this.port = port
         return this
     }
@@ -68,7 +68,7 @@ open class KoraMysqlClientConfig : KoraConfig() {
         return this.username
     }
 
-    open fun username(username: String): KoraMysqlClientConfig {
+    open fun username(username: String): KalmiaMysqlClientConfig {
         this.username = username
         return this
     }
@@ -77,7 +77,7 @@ open class KoraMysqlClientConfig : KoraConfig() {
         return this.password
     }
 
-    open fun password(password: String): KoraMysqlClientConfig {
+    open fun password(password: String): KalmiaMysqlClientConfig {
         this.password = password
         return this
     }
@@ -86,7 +86,7 @@ open class KoraMysqlClientConfig : KoraConfig() {
         return this.database
     }
 
-    open fun database(database: String): KoraMysqlClientConfig {
+    open fun database(database: String): KalmiaMysqlClientConfig {
         this.database = database
         return this
     }
@@ -95,7 +95,7 @@ open class KoraMysqlClientConfig : KoraConfig() {
         return this.reconnectTime
     }
 
-    open fun reconnectTime(reconnectTime: Int): KoraMysqlClientConfig {
+    open fun reconnectTime(reconnectTime: Int): KalmiaMysqlClientConfig {
         this.reconnectTime = reconnectTime
         return this
     }
